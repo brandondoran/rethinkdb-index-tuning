@@ -7,7 +7,6 @@
     "seed": "rethinkdb import -f data/posts.json --table index_tuning.posts",
     "setup": "babel-node --presets es2015 ./lib/setup",
     "clean": "babel-node --presets es2015 ./lib/cleanup",
-    "prestart": "npm run setup",
     "start": "babel-node --presets es2015 index"
   },
   "keywords": [

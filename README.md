@@ -12,11 +12,12 @@ platform.
   rethinkdb
   ```
   
-- Install dependencies and seed the database by running these commands in another terminal:
+- Install dependencies, seed the database, and create the indexes by running these commands in another terminal:
 
   ```
   npm install
   npm run seed
+  npm run setup
   ```
     
 This will create a database named `index_tuning` containing a single table named `posts`.
