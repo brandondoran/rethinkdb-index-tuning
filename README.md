@@ -27,9 +27,9 @@ This will create a database named `index_tuning` containing a single table named
 	
     npm start
     
-This will run setup to create the indexes. Then the benchmark suite will run, testing 3 different queries. All queries return documents in the posts table with a given **author** and **tag**. Each query returns the same result but uses different RethinkDB api calls and a different indexes.
+This will run setup to create the indexes. Then the benchmark suite will run, testing 4 different queries. All queries return documents in the posts table with a given **author** and **tag**. Each query returns the same result but uses different RethinkDB api calls and a different indexes.
 
-1. Chained `filter` commands
+1. `filter` with `row` commands
  
   ```
   r.table('posts')
@@ -38,7 +38,15 @@ This will run setup to create the indexes. Then the benchmark suite will run, te
       r.row('tags').contains(tag))
     ).run(conn);
   ```
-2. `getAll` with simple index and `filter`
+2. `filter` with a predicate function
+ 
+  ```
+  r.table('posts')
+    .filter(post => r.and(post('author').eq(author),
+      post('tags').contains(tag))
+    ).run(conn);
+  ```
+3. `getAll` with simple index and chained `filter`
 
   ```
   r.table('posts')

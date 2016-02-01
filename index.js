@@ -1,7 +1,12 @@
 import r from 'rethinkdb';
 import { Suite } from 'benchmark';
 import config from './config';
-import { filterOnly, getAllAndFilter, mapped } from './lib/db';
+import {
+  filterRowPredicate,
+  filterPredicateFunction,
+  getAllFilterChain,
+  getAllMapped
+} from './lib/db';
 
 const suite = new Suite();
 const author = 'Kendra Mertz';
@@ -10,25 +15,32 @@ const tag = 'cat';
 r.connect(config).then(conn => {
   console.info(`Connected to rethinkdb at ${config.host}:${config.port}...\n`);
   return suite
-    .add('filterOnly', {
+    .add('filterRowPredicate', {
       defer: true,
       fn: deferred => {
         suite.name;
-        filterOnly(conn, author, tag).then(() => deferred.resolve());
+        filterRowPredicate(conn, author, tag).then(() => deferred.resolve());
       }
     })
-    .add('getAllAndFilter', {
+    .add('filterPredicateFunction', {
       defer: true,
       fn: deferred => {
         suite.name;
-        getAllAndFilter(conn, author, tag).then(() => deferred.resolve());
+        filterPredicateFunction(conn, author, tag).then(() => deferred.resolve());
       }
     })
-    .add('mapped', {
+    .add('getAllFilterChain', {
       defer: true,
       fn: deferred => {
         suite.name;
-        mapped(conn, author, tag).then(() => deferred.resolve());
+        getAllFilterChain(conn, author, tag).then(() => deferred.resolve());
+      }
+    })
+    .add('getAllMapped', {
+      defer: true,
+      fn: deferred => {
+        suite.name;
+        getAllMapped(conn, author, tag).then(() => deferred.resolve());
       }
     })
     .on('cycle', function(event) {
