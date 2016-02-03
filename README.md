@@ -1,6 +1,6 @@
 # rethinkdb-index-tuning
 
-Demonstrates different types of indexes in RethinkDB and how query performance is affected.
+Demonstrates different types of indexes in RethinkDB and how query performance is affected. Supplementary [blog post](https://medium.com/connect-the-dots/optimizing-queries-in-rethinkdb-584d7f660cb#.81nqz7nt9).
 
 ## Setup
 
